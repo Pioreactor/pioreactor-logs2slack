@@ -11,7 +11,7 @@ This is a two part installation.
 1. You probably want a dedicated channel for incoming logs, as it can get chatty. So go ahead
 and create a dedicated channel in your Slack workspace. I've called mine `experiment_logs`.
 
-2. In (Your Apps)[https://api.slack.com/apps/], click "Create New App" -> From "Scratch". Give it a name (something descriptive, like `Pioreactor Logs2Slack`), and select the workspace.
+2. In [Your Apps](https://api.slack.com/apps/), click "Create New App" -> From "Scratch". Give it a name (something descriptive, like `Pioreactor Logs2Slack`), and select the workspace.
 
 3. On the next page, select "Incoming Webhooks", and turn "Activate" to `On`
 

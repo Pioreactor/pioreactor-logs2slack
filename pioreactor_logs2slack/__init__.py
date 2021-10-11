@@ -5,7 +5,7 @@ import click
 from requests import post
 from pioreactor.background_jobs.base import BackgroundJob
 from pioreactor.config import config
-from pioreactor.whoami import get_unit_name, UNIVERSAL_EXPERIMENT
+from pioreactor.whoami import get_unit_name, get_latest_experiment_name
 
 
 class Logs2Slack(BackgroundJob):
@@ -26,7 +26,7 @@ class Logs2Slack(BackgroundJob):
         payload = json.loads(msg.payload)
 
         # check to see if we should allow the logs based on the level.
-        if getattr(logging, self.log_level) < getattr(logging, payload['level']):
+        if getattr(logging, self.log_level) > getattr(logging, payload['level']):
             return
 
         slack_msg = f"[{payload['level']}] [{payload['task']}] {payload['message']}"
@@ -48,6 +48,6 @@ def click_logs2slack():
     """
 
     lg = Logs2Slack(
-        unit=get_unit_name(), experiment=UNIVERSAL_EXPERIMENT
+        unit=get_unit_name(), experiment=get_latest_experiment_name()
     )
     lg.block_until_disconnected()
