@@ -29,7 +29,7 @@ class Logs2Slack(BackgroundJob):
         if getattr(logging, self.log_level) > getattr(logging, payload['level']):
             return
 
-        slack_msg = f"[{payload['level']}] [{payload['task']}] {payload['message']}"
+        slack_msg = f"[{payload['level']}] [{self.unit}] [{payload['task']}] {payload['message']}"
         encoded_json = json.dumps({"text": slack_msg}).encode("utf-8")
 
         post(
