@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 import logging
+import click
 from requests import post
 from pioreactor.background_jobs.base import BackgroundJob
 from pioreactor.config import config
@@ -10,11 +11,11 @@ from pioreactor.whoami import get_unit_name, UNIVERSAL_EXPERIMENT
 class Logs2Slack(BackgroundJob):
 
     def __init__(self, unit, experiment):
-        super(Logs2slack, self).__init__(
+        super(Logs2Slack, self).__init__(
             unit=unit, experiment=experiment, job_name="logs2slack"
         )
         self.slack_webhook_url = config.get("logs2slack", "slack_webhook_url")
-        self.log_level = config.get("logs2slack", "log_level", default="INFO")
+        self.log_level = config.get("logs2slack", "log_level", fallback="INFO")
 
         if not self.slack_webhook_url:
             raise ValueError("[logs2slack] slack_webhook_url is not defined in your config.ini.")
@@ -46,7 +47,7 @@ def click_logs2slack():
     turn on logging to Slack
     """
 
-    lg = Logs2slack(
+    lg = Logs2Slack(
         unit=get_unit_name(), experiment=UNIVERSAL_EXPERIMENT
     )
     lg.block_until_disconnected()
