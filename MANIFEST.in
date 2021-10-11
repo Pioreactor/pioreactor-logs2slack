@@ -1,2 +1,2 @@
-include pioreactor_air_bubbler/additional_config.ini
-recursive-include pioreactor_air_bubbler/ui/ *.yaml
+include pioreactor_logs2slack/additional_config.ini
+recursive-include pioreactor_logs2slack/ui/ *.yaml
