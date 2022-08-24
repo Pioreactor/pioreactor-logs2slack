@@ -15,11 +15,11 @@ class Logs2Slack(BackgroundJob):
             unit=unit, experiment=experiment, job_name="logs2slack"
         )
         self.slack_webhook_url = config.get("logs2slack", "slack_webhook_url")
-        self.log_level = config.get("logs2slack", "log_level", fallback="INFO")
-
         if not self.slack_webhook_url:
+            self.logger.error("[logs2slack] slack_webhook_url is not defined in your config.ini.")
             raise ValueError("[logs2slack] slack_webhook_url is not defined in your config.ini.")
 
+        self.log_level = config.get("logs2slack", "log_level", fallback="INFO")
         self.start_passive_listeners()
 
     def publish_to_slack(self, msg):
@@ -32,10 +32,12 @@ class Logs2Slack(BackgroundJob):
         slack_msg = f"[{payload['level']}] [{self.unit}] [{payload['task']}] {payload['message']}"
         encoded_json = json.dumps({"text": slack_msg}).encode("utf-8")
 
-        post(
+        r = post(
             self.slack_webhook_url, data=encoded_json,
             headers={'Content-Type': 'application/json'}
         )
+
+        r.raise_for_status()
 
     def start_passive_listeners(self):
         self.subscribe_and_callback(self.publish_to_slack, f"pioreactor/{self.unit}/+/logs/+")
