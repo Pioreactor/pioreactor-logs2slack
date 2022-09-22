@@ -13,7 +13,6 @@ setup(
     author="Cam Davidson Pilon",
     url="https://github.com/Pioreactor/pioreactor-logs2slack",
     packages=find_packages(),
-    include_package_data=True,
     entry_points={
         "pioreactor.plugins": "pioreactor_logs2slack = pioreactor_logs2slack"
     },

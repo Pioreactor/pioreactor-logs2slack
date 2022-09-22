@@ -9,10 +9,11 @@ from pioreactor.whoami import get_unit_name, get_latest_experiment_name
 
 
 class Logs2Slack(BackgroundJob):
+    job_name="logs2slack"
 
     def __init__(self, unit, experiment):
         super(Logs2Slack, self).__init__(
-            unit=unit, experiment=experiment, job_name="logs2slack"
+            unit=unit, experiment=experiment
         )
         self.slack_webhook_url = config.get("logs2slack", "slack_webhook_url")
         if not self.slack_webhook_url:
@@ -27,6 +28,9 @@ class Logs2Slack(BackgroundJob):
 
         # check to see if we should allow the logs based on the level.
         if getattr(logging, self.log_level) > getattr(logging, payload['level']):
+            return
+        elif payload['task'] == self.job_name:
+            # avoid an infinite loop, https://github.com/Pioreactor/pioreactor-logs2slack/issues/2
             return
 
         slack_msg = f"[{payload['level']}] [{self.unit}] [{payload['task']}] {payload['message']}"
