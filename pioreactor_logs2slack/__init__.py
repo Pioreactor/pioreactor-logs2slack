@@ -2,18 +2,18 @@
 import json
 import logging
 import click
-from requests import post
-from pioreactor.background_jobs.base import BackgroundJob
+from pioreactor.mureq import post
+from pioreactor.background_jobs.base import BackgroundJobContrib
 from pioreactor.config import config
 from pioreactor.whoami import get_unit_name, get_latest_experiment_name
 
 
-class Logs2Slack(BackgroundJob):
+class Logs2Slack(BackgroundJobContrib):
     job_name="logs2slack"
 
     def __init__(self, unit, experiment):
         super(Logs2Slack, self).__init__(
-            unit=unit, experiment=experiment
+            unit=unit, experiment=experiment, source="pioreactor_logs2slack"
         )
         self.slack_webhook_url = config.get("logs2slack", "slack_webhook_url")
         if not self.slack_webhook_url:
