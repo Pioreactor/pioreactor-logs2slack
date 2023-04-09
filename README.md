@@ -39,10 +39,3 @@ Add your webhook URL from step 6. here. Click "Save". You can also change the le
 3. In the "Pioreactors" page, you should see "Logs2Slack" as an activity now. You can start this activity like you would any other activity. Go ahead and start it.
 
 4. In your dedicated Slack channel, you should start to see logs arrive!
-
-
-
-
-
-
-

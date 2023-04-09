@@ -1,15 +1,19 @@
 # -*- coding: utf-8 -*-
+from __future__ import annotations
+
 import json
 import logging
+
 import click
-from pioreactor.mureq import post
 from pioreactor.background_jobs.base import BackgroundJobContrib
 from pioreactor.config import config
-from pioreactor.whoami import get_unit_name, get_latest_experiment_name
+from pioreactor.mureq import post
+from pioreactor.whoami import get_latest_experiment_name
+from pioreactor.whoami import get_unit_name
 
 
 class Logs2Slack(BackgroundJobContrib):
-    job_name="logs2slack"
+    job_name = "logs2slack"
 
     def __init__(self, unit, experiment):
         super(Logs2Slack, self).__init__(
@@ -27,9 +31,9 @@ class Logs2Slack(BackgroundJobContrib):
         payload = json.loads(msg.payload)
 
         # check to see if we should allow the logs based on the level.
-        if getattr(logging, self.log_level) > getattr(logging, payload['level']):
+        if getattr(logging, self.log_level) > getattr(logging, payload["level"]):
             return
-        elif payload['task'] == self.job_name:
+        elif payload["task"] == self.job_name:
             # avoid an infinite loop, https://github.com/Pioreactor/pioreactor-logs2slack/issues/2
             return
 
@@ -37,8 +41,7 @@ class Logs2Slack(BackgroundJobContrib):
         encoded_json = json.dumps({"text": slack_msg}).encode("utf-8")
 
         r = post(
-            self.slack_webhook_url, data=encoded_json,
-            headers={'Content-Type': 'application/json'}
+            self.slack_webhook_url, data=encoded_json, headers={"Content-Type": "application/json"}
         )
 
         r.raise_for_status()
@@ -53,7 +56,5 @@ def click_logs2slack():
     turn on logging to Slack
     """
 
-    lg = Logs2Slack(
-        unit=get_unit_name(), experiment=get_latest_experiment_name()
-    )
+    lg = Logs2Slack(unit=get_unit_name(), experiment=get_latest_experiment_name())
     lg.block_until_disconnected()

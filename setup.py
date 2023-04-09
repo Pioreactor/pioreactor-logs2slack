@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-from setuptools import setup, find_packages
+from __future__ import annotations
+
+from setuptools import find_packages
+from setuptools import setup
 
 
 setup(
@@ -13,7 +16,5 @@ setup(
     author="Cam Davidson Pilon",
     url="https://github.com/Pioreactor/pioreactor-logs2slack",
     packages=find_packages(),
-    entry_points={
-        "pioreactor.plugins": "pioreactor_logs2slack = pioreactor_logs2slack"
-    },
+    entry_points={"pioreactor.plugins": "pioreactor_logs2slack = pioreactor_logs2slack"},
 )
