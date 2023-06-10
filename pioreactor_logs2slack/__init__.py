@@ -17,7 +17,7 @@ class Logs2Slack(BackgroundJobContrib):
 
     def __init__(self, unit, experiment):
         super(Logs2Slack, self).__init__(
-            unit=unit, experiment=experiment, source="pioreactor_logs2slack"
+            unit=unit, experiment=experiment, plugin_name="pioreactor_logs2slack"
         )
         self.slack_webhook_url = config.get("logs2slack", "slack_webhook_url")
         if not self.slack_webhook_url:
