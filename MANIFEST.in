@@ -1,2 +1,3 @@
 include pioreactor_logs2slack/additional_config.ini
-recursive-include pioreactor_logs2slack/ui/ *.yaml
+include pioreactor_logs2slack/post_install.sh
+include pioreactor_logs2slack/pre_uninstall.sh

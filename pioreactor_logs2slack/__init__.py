@@ -8,8 +8,8 @@ import click
 from pioreactor.background_jobs.base import BackgroundJobContrib
 from pioreactor.config import config
 from pioreactor.mureq import post
-from pioreactor.whoami import get_latest_experiment_name
 from pioreactor.whoami import get_unit_name
+from pioreactor.whoami import UNIVERSAL_EXPERIMENT
 
 
 class Logs2Slack(BackgroundJobContrib):
@@ -56,5 +56,5 @@ def click_logs2slack():
     turn on logging to Slack
     """
 
-    lg = Logs2Slack(unit=get_unit_name(), experiment=get_latest_experiment_name())
+    lg = Logs2Slack(unit=get_unit_name(), experiment=UNIVERSAL_EXPERIMENT)
     lg.block_until_disconnected()

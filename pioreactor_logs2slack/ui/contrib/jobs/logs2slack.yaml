@@ -1,7 +1,0 @@
----
-display_name: Logs2Slack
-job_name: logs2slack
-display: true
-description: Push logs to your Slack room.
-source: pioreactor_logs2slack
-published_settings: []
