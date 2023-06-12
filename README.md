@@ -36,4 +36,6 @@ log_level=INFO
 
 Add your webhook URL from step 6. here. Click "Save". You can also change the level of logs to report, see [Python logging levels](https://docs.python.org/3/library/logging.html#logging-levels).
 
-3. In your dedicated Slack channel, you should start to see logs arrive!
+3. Power-cycle (reboot) the Pioreactor, or ssh into the Pioreactor and run `sudo systemctl restart pioreactor_startup_run@logs2slack.service`
+
+4. In your dedicated Slack channel, you should start to see logs arrive!
