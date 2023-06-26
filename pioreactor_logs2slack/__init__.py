@@ -6,10 +6,15 @@ import logging
 
 import click
 from pioreactor.background_jobs.base import BackgroundJobContrib
+from pioreactor.cli.pio import JOBS_TO_SKIP_KILLING
 from pioreactor.config import config
 from pioreactor.mureq import post
 from pioreactor.whoami import get_unit_name
 from pioreactor.whoami import UNIVERSAL_EXPERIMENT
+
+
+# since this is a long-running job, we don't want it to be killed by pio kill --all-jobs.
+JOBS_TO_SKIP_KILLING.append("logs2slack")
 
 
 class Logs2Slack(BackgroundJobContrib):
