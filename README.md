@@ -24,7 +24,7 @@ and create a dedicated channel in your Slack workspace. I've called mine `experi
 
 #### 2. Installing this plugin
 
-1. In your Pioreactor interface, click on "Plugins". Find `pioreactor-logs2slack`, and click "Install" beside it. This will install the plugin for each Pioreactor in your cluster.
+1. In your Pioreactor interface, click on "Plugins". Find `pioreactor-logs2slack`, and click "Install" beside it. This will install the plugin for each Pioreactor in your cluster. **Or** you can run `pio install-plugin pioreactor-logs2slack`
 
 2. After installing (should take less than a minute), click on "Configuration". At the bottom of the page will be a section called `[logs2slack]`.
 
@@ -36,6 +36,6 @@ log_level=INFO
 
 Add your webhook URL from step 6. here. Click "Save". You can also change the level of logs to report, see [Python logging levels](https://docs.python.org/3/library/logging.html#logging-levels).
 
-3. Power-cycle (reboot) the Pioreactor, or ssh into the Pioreactor and run `sudo systemctl restart pioreactor_startup_run@logs2slack.service`
+3. Power-cycle (reboot) the Pioreactor, or ssh into the Pioreactor leader and run `sudo systemctl restart pioreactor_startup_run@logs2slack.service`
 
 4. In your dedicated Slack channel, you should start to see logs arrive!
