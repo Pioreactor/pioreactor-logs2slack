@@ -9,6 +9,7 @@ from pioreactor.background_jobs.base import BackgroundJobContrib
 from pioreactor.cli.pio import JOBS_TO_SKIP_KILLING
 from pioreactor.config import config
 from pioreactor.mureq import post
+from pioreactor.types import MQTTMessage
 from pioreactor.whoami import get_unit_name
 from pioreactor.whoami import UNIVERSAL_EXPERIMENT
 
@@ -20,7 +21,7 @@ JOBS_TO_SKIP_KILLING.append("logs2slack")
 class Logs2Slack(BackgroundJobContrib):
     job_name = "logs2slack"
 
-    def __init__(self, unit, experiment):
+    def __init__(self, unit: str, experiment: str) -> None:
         super(Logs2Slack, self).__init__(
             unit=unit, experiment=experiment, plugin_name="pioreactor_logs2slack"
         )
@@ -32,7 +33,7 @@ class Logs2Slack(BackgroundJobContrib):
         self.log_level = config.get("logs2slack", "log_level", fallback="INFO")
         self.start_passive_listeners()
 
-    def publish_to_slack(self, msg):
+    def publish_to_slack(self, msg: MQTTMessage) -> None:
         payload = json.loads(msg.payload)
 
         # check to see if we should allow the logs based on the level.
@@ -51,12 +52,12 @@ class Logs2Slack(BackgroundJobContrib):
 
         r.raise_for_status()
 
-    def start_passive_listeners(self):
+    def start_passive_listeners(self) -> None:
         self.subscribe_and_callback(self.publish_to_slack, f"pioreactor/{self.unit}/+/logs/+")
 
 
 @click.command(name="logs2slack")
-def click_logs2slack():
+def click_logs2slack() -> None:
     """
     turn on logging to Slack
     """
