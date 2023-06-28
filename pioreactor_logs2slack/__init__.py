@@ -46,7 +46,7 @@ class Logs2Slack(BackgroundJobContrib):
         encoded_json = json.dumps({"text": slack_msg}).encode("utf-8")
 
         r = post(
-            self.slack_webhook_url, data=encoded_json, headers={"Content-Type": "application/json"}
+            self.slack_webhook_url, body=encoded_json, headers={"Content-Type": "application/json"}
         )
 
         r.raise_for_status()
