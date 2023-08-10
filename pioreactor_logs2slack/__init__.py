@@ -35,6 +35,8 @@ class Logs2Slack(BackgroundJobContrib):
 
     def publish_to_slack(self, msg: MQTTMessage) -> None:
         payload = json.loads(msg.payload)
+        topics = msg.payload.split("/")
+        unit = topics[1]
 
         # check to see if we should allow the logs based on the level.
         if getattr(logging, self.log_level) > getattr(logging, payload["level"]):
@@ -43,7 +45,7 @@ class Logs2Slack(BackgroundJobContrib):
             # avoid an infinite loop, https://github.com/Pioreactor/pioreactor-logs2slack/issues/2
             return
 
-        slack_msg = f"[{payload['level']}] [{self.unit}] [{payload['task']}] {payload['message']}"
+        slack_msg = f"[{payload['level']}] [{unit}] [{payload['task']}] {payload['message']}"
         encoded_json = json.dumps({"text": slack_msg}).encode("utf-8")
 
         r = post(
