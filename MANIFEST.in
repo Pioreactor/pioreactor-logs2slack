@@ -1,3 +1,4 @@
 include pioreactor_logs2slack/additional_config.ini
 include pioreactor_logs2slack/post_install.sh
 include pioreactor_logs2slack/pre_uninstall.sh
+include pioreactor_logs2slack/LEADER_ONLY

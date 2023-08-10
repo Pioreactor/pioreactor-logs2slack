@@ -53,7 +53,7 @@ class Logs2Slack(BackgroundJobContrib):
         r.raise_for_status()
 
     def start_passive_listeners(self) -> None:
-        self.subscribe_and_callback(self.publish_to_slack, f"pioreactor/{self.unit}/+/logs/+")
+        self.subscribe_and_callback(self.publish_to_slack, "pioreactor/+/+/logs/+")
 
 
 @click.command(name="logs2slack")

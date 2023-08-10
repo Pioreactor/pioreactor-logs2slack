@@ -1,6 +1,6 @@
 ### Pioreactor Logs2Slack
 
-This is a Pioreactor plugin to post a bioreactor's logs to a Slack room.
+This is a Pioreactor plugin to post a bioreactor's logs to a Slack channel.
 
 ### Installation
 
@@ -24,7 +24,7 @@ and create a dedicated channel in your Slack workspace. I've called mine `experi
 
 #### 2. Installing this plugin
 
-1. In your Pioreactor interface, click on "Plugins". Find `pioreactor-logs2slack`, and click "Install" beside it. This will install the plugin for each Pioreactor in your cluster. **Or** you can run `pio install-plugin pioreactor-logs2slack`
+1. In your Pioreactor interface, click on "Plugins". Find `pioreactor-logs2slack`, and click "Install" beside it. **Or** you can run `pio install-plugin pioreactor-logs2slack`. Either way, this plugin will be installed on your leader Pioreactor.
 
 2. After installing (should take less than a minute), click on "Configuration". At the bottom of the page will be a section called `[logs2slack]`.
 
