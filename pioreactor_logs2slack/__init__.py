@@ -35,7 +35,7 @@ class Logs2Slack(BackgroundJobContrib):
 
     def publish_to_slack(self, msg: MQTTMessage) -> None:
         payload = json.loads(msg.payload)
-        topics = msg.payload.decode().split("/")
+        topics = msg.topic.split("/")
         unit = topics[1]
 
         # check to see if we should allow the logs based on the level.
