@@ -24,7 +24,7 @@ and create a dedicated channel in your Slack workspace. I've called mine `experi
 
 #### 2. Installing this plugin
 
-1. In your Pioreactor interface, click on "Plugins". Find `pioreactor-logs2slack`, and click "Install" beside it. **Or** you can run `pio install-plugin pioreactor-logs2slack`. Either way, this plugin will be installed on your leader Pioreactor.
+1. In your Pioreactor interface, click on "Plugins". Find `pioreactor-logs2slack`, and click "Install" beside it. **Or** you can run `pio plugins install pioreactor-logs2slack`. Either way, this plugin will be installed on your leader Pioreactor.
 
 2. After installing (should take less than a minute), click on "Configuration". At the bottom of the page will be a section called `[logs2slack]`.
 
