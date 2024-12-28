@@ -5,20 +5,15 @@ import json
 import logging
 
 import click
-from pioreactor.background_jobs.base import BackgroundJobContrib
+from pioreactor.background_jobs.base import LongRunningBackgroundJobContrib
 from pioreactor.config import config
 from pioreactor.mureq import post
 from pioreactor.types import MQTTMessage
-from pioreactor.utils import JobManager
 from pioreactor.whoami import get_unit_name
 from pioreactor.whoami import UNIVERSAL_EXPERIMENT
 
 
-# since this is a long-running job, we don't want it to be killed by pio kill --all-jobs.
-JobManager.LONG_RUNNING_JOBS = JobManager.LONG_RUNNING_JOBS + ("logs2slack",)
-
-
-class Logs2Slack(BackgroundJobContrib):
+class Logs2Slack(LongRunningBackgroundJobContrib):
     job_name = "logs2slack"
 
     def __init__(self, unit: str, experiment: str) -> None:
@@ -46,11 +41,8 @@ class Logs2Slack(BackgroundJobContrib):
             return
 
         slack_msg = f"[{payload['level']}] [{unit}] [{payload['task']}] {payload['message']}"
-        encoded_json = json.dumps({"text": slack_msg}).encode("utf-8")
 
-        r = post(
-            self.slack_webhook_url, body=encoded_json, headers={"Content-Type": "application/json"}
-        )
+        r = post(self.slack_webhook_url, json={"text": slack_msg})
 
         r.raise_for_status()
 
